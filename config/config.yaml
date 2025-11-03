@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+database:
+  host: postgres
+  port: 5432
+  user: postgres
+  password: postgres
+  db_name: auth_system
+
+rabbitmq:
+  host: rabbitmq
+  port: 5672
+  user: guest
+  password: guest
+  vhost: /

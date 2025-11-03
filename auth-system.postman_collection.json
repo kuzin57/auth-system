@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "auth-system-collection",
+		"name": "Auth System API",
+		"description": "Коллекция запросов для системы аутентификации",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send Registration Link",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"user@example.com\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/send-registration-link",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"send-registration-link"
+					]
+				},
+				"description": "Отправляет ссылку для регистрации на указанный email. Сообщение отправляется в очередь RabbitMQ для обработки."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/send-registration-link",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"send-registration-link"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"status\": \"success\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"securepassword123\",\n  \"token\": \"your-jwt-token-here\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"register"
+					]
+				},
+				"description": "Регистрирует нового пользователя. Требуется валидный JWT токен, полученный из ссылки регистрации."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"securepassword123\",\n  \"token\": \"your-jwt-token-here\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"user_id\": \"123e4567-e89b-12d3-a456-426614174000\"\n}"
+				}
+			]
+		},
+		{
+			"name": "List Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Возвращает список всех зарегистрированных пользователей."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"users\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"email\": \"user@example.com\",\n      \"created_at\": \"2024-01-01T12:00:00Z\",\n      \"updated_at\": \"2024-01-01T12:00:00Z\"\n    }\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Registration Page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/registration?token={{registration_token}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"registration"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "{{registration_token}}",
+							"description": "JWT токен из ссылки регистрации"
+						}
+					]
+				},
+				"description": "Возвращает HTML страницу с формой регистрации. Требуется валидный JWT токен в query параметрах."
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/registration?token=your-jwt-token-here",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"registration"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "your-jwt-token-here"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						}
+					],
+					"cookie": [],
+					"body": "<!DOCTYPE html>\n<html>\n<head>\n    <title>Регистрация</title>\n</head>\n<body>\n    <h1>Регистрация</h1>\n    <form id=\"registrationForm\">\n        <input type=\"email\" id=\"email\" value=\"user@example.com\" readonly>\n        <input type=\"password\" id=\"password\" placeholder=\"Пароль\" required>\n        <button type=\"submit\">Зарегистрироваться</button>\n    </form>\n</body>\n</html>"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "registration_token",
+			"value": "",
+			"type": "string",
+			"description": "JWT токен из ссылки регистрации (будет получен автоматически после отправки ссылки)"
+		}
+	]
+}
