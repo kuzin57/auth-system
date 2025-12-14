@@ -68,7 +68,11 @@ func (s *Service) ValidateToken(tokenString string) (*Claims, error) {
 	}
 
 	if !token.Valid {
-		return nil, errors.New("invalid token")
+		return nil, ErrInvalidToken
+	}
+
+	if claims.ExpiresAt.Before(time.Now()) {
+		return nil, ErrExpiredToken
 	}
 
 	return claims, nil

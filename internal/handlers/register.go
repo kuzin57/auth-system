@@ -35,6 +35,7 @@ func (h *RegisterHandler) Handle(c *gin.Context) {
 		log.Println("failed to validate token", err)
 
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+
 		return
 	}
 
